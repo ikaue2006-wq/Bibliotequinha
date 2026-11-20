@@ -56,7 +56,8 @@ class Biblioteca
 
     public bool TitleExists(string Title)
     {
-        return Aisle1.Exists(x => x.Title == Title) || Aisle2.Exists(x => x.Title == Title) || Aisle3.Exists(x => x.Title == Title);
+        string loweredTitle = Title.ToLower();
+        return Aisle1.Exists(x => x.Title.ToLower() == loweredTitle) || Aisle2.Exists(x => x.Title.ToLower() == loweredTitle) || Aisle3.Exists(x => x.Title.ToLower() == loweredTitle);
 
     }
     public bool IDexists(int id) { 
@@ -197,7 +198,7 @@ class Biblioteca
         BubbleSort(Aisle3, option);
 
     }
-    private Livro BinarySearch(List<Livro> books,int id) 
+    private Livro? BinarySearch(List<Livro> books,int id) 
     {
         int left = 0;
         int right = books.Count - 1;

@@ -1,7 +1,6 @@
-
-
-using System.ComponentModel;
-using System.Runtime.InteropServices.Marshalling;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 class Livro {
     public string Title { get; set; }
@@ -46,12 +45,22 @@ class Biblioteca
 
         switch (AisleIndex) 
         {
-            case 1: return (Aisle1.Count == MaxCapacity);
-            case 2: return (Aisle2.Count == MaxCapacity);
-            case 3: return (Aisle3.Count == MaxCapacity);
+            case 1: return (Aisle1.Count >= MaxCapacity);
+            case 2: return (Aisle2.Count >= MaxCapacity);
+            case 3: return (Aisle3.Count >= MaxCapacity);
             default : return false; 
 
         }
+
+    }
+
+    public bool TitleExists(string Title)
+    {
+        return Aisle1.Exists(x => x.Title == Title) || Aisle2.Exists(x => x.Title == Title) || Aisle3.Exists(x => x.Title == Title);
+
+    }
+    public bool IDexists(int id) { 
+       return Aisle1.Exists(x =>  x.ID == id) || Aisle2.Exists(x => x.ID == id) || Aisle3.Exists(x => x.ID == id);
 
     }
 
@@ -73,9 +82,52 @@ class Biblioteca
         }
 
         Console.Write("Título: ");
-        string Title = Console.ReadLine();
+        string? Title;
+        int count = 0;
+        while (true)
+        {
+            Title = Console.ReadLine();
+            Console.WriteLine("");
+            if (Title == "") {
+                if (count == 0) {
+                    Console.WriteLine("Ah, relaxa escreve aí, novamente, ");
+                }
+                if (count == 1)
+                {
+                    Console.WriteLine("Sério mano? que criatividade é essa? Deixar o negócio em branco já é demais...");
+                    Console.WriteLine("Tenta de novo, aí!");
+                }
+                if (count >= 2)
+                {
+                    Console.WriteLine("...");
+                }
+                count++;
+            }
+            bool Exists = TitleExists(Title);
+            if (!Exists && Title != "")
+            {
+                break;
+            }
+            if (Exists) {
+                Console.WriteLine("Esse título já está cadastrado. Tente outro!");
+            }
+          
+        }
+
+
         Console.Write("ID: ");
-        int ID = int.Parse(Console.ReadLine());
+        int ID;
+
+        while (true) {
+            ID = int.Parse(Console.ReadLine());
+            if (!IDexists(ID)) 
+              {
+                break;
+            }
+            Console.WriteLine("Esse ID já está cadastrado. Tente outro!");
+        }
+
+
         Console.Write("Autor: ");
         string Author = Console.ReadLine();
         Console.Write("Ano: ");
@@ -101,7 +153,7 @@ class Biblioteca
     }
 
 
-    public void BubbleSort(List<Livro> books, int option) 
+    private void BubbleSort(List<Livro> books, int option) 
     {
         for (int i = 0; i < books.Count - 1; i++) 
         {
@@ -138,14 +190,14 @@ class Biblioteca
         
 
     }
-    public void SortBooks(int option)
+    private void SortBooks(int option)
     {
         BubbleSort(Aisle1, option);
-        BubbleSort(Aisle1, option);
-        BubbleSort(Aisle1, option);
+        BubbleSort(Aisle2, option);
+        BubbleSort(Aisle3, option);
 
     }
-    public Livro BinarySearch(List<Livro> books,int id) 
+    private Livro BinarySearch(List<Livro> books,int id) 
     {
         int left = 0;
         int right = books.Count - 1;

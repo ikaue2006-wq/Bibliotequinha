@@ -11,7 +11,7 @@ class Livro {
    
 
     public Livro(string Title,int ID, string Author, int Year) {
-         this.Title = Title;
+        this.Title = Title;
         this.Author = Author;
         this.Year = Year;
         this.ID = ID;
@@ -94,8 +94,37 @@ class Biblioteca
     }
 
 
-    public void BubbleSort(List<Livro> books, int option) { 
-           
+    public void BubbleSort(List<Livro> books, int option) {
+        for (int i = 0; i < books.Count - 1; i++) {
+            for (int j = 0; j < books.Count - 1 - i; j++) {
+                bool ShouldSwap = false;
+
+                switch (option) {
+                    case 1:
+                        ShouldSwap = books[j].ID > books[j + 1].ID;
+                        break;
+                    case 2:
+                        ShouldSwap = books[j].Year > books[j + 1].Year;
+                        break;
+                    case 3:
+                        ShouldSwap = string.Compare(books[j].Author, books[j + 1].Author,StringComparison.OrdinalIgnoreCase) > 0;
+                        break;
+                
+                
+                }
+
+                if (ShouldSwap) {
+                    Livro temp = books[j];
+                    books[j] = books[j + 1];
+                    books[j+1] = temp;  
+                
+                }
+            
+            }
+        
+        }
+        
+
     }
 
     public void DisplayAisle(List<Livro> aisle, int aisleNumber) {
@@ -121,6 +150,8 @@ class Biblioteca
             Console.WriteLine("Input inválido");
             return;
         }
+
+        SortBooks(input);
 
         DisplayAisle(Aisle1, 1);
         DisplayAisle(Aisle2, 2);

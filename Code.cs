@@ -1,6 +1,7 @@
 
 
 using System.ComponentModel;
+using System.Runtime.InteropServices.Marshalling;
 
 class Livro {
     public string Title { get; set; }
@@ -93,7 +94,9 @@ class Biblioteca
     }
 
 
-
+    public void BubbleSort(List<Livro> books, int option) { 
+           
+    }
 
     public void DisplayAisle(List<Livro> aisle, int aisleNumber) {
         Console.WriteLine($"----Ala {aisleNumber}----");
@@ -105,11 +108,19 @@ class Biblioteca
         }
         Console.WriteLine("------------------------------------------------------");
     }
+    public void SortBooks(int option) {
+        BubbleSort(Aisle1, option);
+        BubbleSort(Aisle1, option);
+        BubbleSort(Aisle1, option);
 
+    }
     public void Display() {
         Console.WriteLine("[1] - Exibir por ID \n [2]- Exibir por ano \n [3]- Exibir por autor");
         int input = int.Parse(Console.ReadLine());
-
+        if (input < 1 || input > 3) {
+            Console.WriteLine("Input inválido");
+            return;
+        }
 
         DisplayAisle(Aisle1, 1);
         DisplayAisle(Aisle2, 2);

@@ -8,9 +8,10 @@ class Livro {
     public int ID { get; set; }
     public string Author { get; set; }
     public int Year { get; set; }
-   
 
-    public Livro(string Title,int ID, string Author, int Year) {
+
+    public Livro(string Title, int ID, string Author, int Year) 
+    {
         this.Title = Title;
         this.Author = Author;
         this.Year = Year;
@@ -40,9 +41,11 @@ class Biblioteca
 
 
     private int MaxCapacity = 7;
-    private bool IsFull(int AisleIndex) {
+    private bool IsFull(int AisleIndex) 
+    {
 
-        switch (AisleIndex) {
+        switch (AisleIndex) 
+        {
             case 1: return (Aisle1.Count == MaxCapacity);
             case 2: return (Aisle2.Count == MaxCapacity);
             case 3: return (Aisle3.Count == MaxCapacity);
@@ -52,16 +55,19 @@ class Biblioteca
 
     }
 
-    public void insert() {
+    public void insert() 
+    {
         Console.WriteLine("Escolha uma ala de 1 a 3");
         Console.Write("Ala: ");
 
         int aisleIndex = int.Parse(Console.ReadLine());
-        if (aisleIndex < 1 || aisleIndex > 3) {
+        if (aisleIndex < 1 || aisleIndex > 3) 
+        {
             Console.WriteLine("Ala inválida!");
             return;
         }
-        if (IsFull(aisleIndex)){
+        if (IsFull(aisleIndex))
+        {
             Console.WriteLine($"A ala {aisleIndex} está cheia!");
             return;
         }
@@ -77,7 +83,8 @@ class Biblioteca
 
         Livro NewBook = new Livro(Title,ID,Author,Year);
 
-        if (aisleIndex == 1) {
+        if (aisleIndex == 1) 
+        {
             Aisle1.Add(NewBook);
         }
         if (aisleIndex == 2)
@@ -94,12 +101,16 @@ class Biblioteca
     }
 
 
-    public void BubbleSort(List<Livro> books, int option) {
-        for (int i = 0; i < books.Count - 1; i++) {
-            for (int j = 0; j < books.Count - 1 - i; j++) {
+    public void BubbleSort(List<Livro> books, int option) 
+    {
+        for (int i = 0; i < books.Count - 1; i++) 
+        {
+            for (int j = 0; j < books.Count - 1 - i; j++) 
+            {
                 bool ShouldSwap = false;
 
-                switch (option) {
+                switch (option) 
+                {
                     case 1:
                         ShouldSwap = books[j].ID > books[j + 1].ID;
                         break;
@@ -113,7 +124,8 @@ class Biblioteca
                 
                 }
 
-                if (ShouldSwap) {
+                if (ShouldSwap) 
+                {
                     Livro temp = books[j];
                     books[j] = books[j + 1];
                     books[j+1] = temp;  
@@ -126,24 +138,33 @@ class Biblioteca
         
 
     }
+    public void BinarySearch() 
+    { 
+    
+    }
 
-    public void DisplayAisle(List<Livro> aisle, int aisleNumber) {
+
+    public void DisplayAisle(List<Livro> aisle, int aisleNumber) 
+    {
         Console.WriteLine($"----Ala {aisleNumber}----");
 
-        foreach (Livro l in aisle) {
+        foreach (Livro l in aisle) 
+        {
             Console.WriteLine($"Autor: {l.Author} - Título: {l.Title} - Ano: {l.Year}");
            
         
         }
         Console.WriteLine("------------------------------------------------------");
     }
-    public void SortBooks(int option) {
+    public void SortBooks(int option) 
+    {
         BubbleSort(Aisle1, option);
         BubbleSort(Aisle1, option);
         BubbleSort(Aisle1, option);
 
     }
-    public void Display() {
+    public void Display() 
+    {
         Console.WriteLine("[1] - Exibir por ID \n [2]- Exibir por ano \n [3]- Exibir por autor");
         int input = int.Parse(Console.ReadLine());
         if (input < 1 || input > 3) {

@@ -138,11 +138,67 @@ class Biblioteca
         
 
     }
-    public void BinarySearch() 
-    { 
-    
-    }
+    public void SortBooks(int option)
+    {
+        BubbleSort(Aisle1, option);
+        BubbleSort(Aisle1, option);
+        BubbleSort(Aisle1, option);
 
+    }
+    public Livro BinarySearch(List<Livro> books,int id) 
+    {
+        int left = 0;
+        int right = books.Count - 1;
+
+        while (left <= right) 
+        { 
+            int mid = left + (right - left) / 2;
+
+            if (books[mid].ID == id) { 
+              return books[mid];
+            }
+            if (books[mid].ID < id)
+            {
+                left = mid + 1;
+            }
+            else 
+            {
+                right = mid - 1;
+            }
+        }
+        return null;
+    }
+    public void SearchBooks(int id) {
+        SortBooks(1);
+
+        Livro WantedBook = BinarySearch(Aisle1, id);
+
+        if (WantedBook == null) {
+            WantedBook = BinarySearch(Aisle2, id);
+        }
+
+        if (WantedBook == null)
+        {
+            WantedBook = BinarySearch(Aisle3, id);
+        }
+
+
+        if (WantedBook != null)
+        {
+            Console.WriteLine("================================");
+            Console.WriteLine($"O livro {WantedBook.Title} foi encontrado!");
+            Console.WriteLine($"De {WantedBook.Author}");
+            Console.WriteLine($"lançado em {WantedBook.Year}");
+            Console.WriteLine($"ID: {WantedBook.ID}");
+            Console.WriteLine("================================");
+        }
+
+        else {
+            Console.WriteLine("Sinto-lhe informar, porém não temos esse livro!");
+        }
+        Console.WriteLine("Pressione qualquer tecla para continuar...");
+        Console.ReadKey();
+    }
 
     public void DisplayAisle(List<Livro> aisle, int aisleNumber) 
     {
@@ -150,22 +206,18 @@ class Biblioteca
 
         foreach (Livro l in aisle) 
         {
-            Console.WriteLine($"Autor: {l.Author} - Título: {l.Title} - Ano: {l.Year}");
+            Console.WriteLine($"Autor: {l.Author} | Título: {l.Title} - Ano: {l.Year} | ID: {l.ID}");
            
         
         }
-        Console.WriteLine("------------------------------------------------------");
+        Console.WriteLine("===================================================");
     }
-    public void SortBooks(int option) 
-    {
-        BubbleSort(Aisle1, option);
-        BubbleSort(Aisle1, option);
-        BubbleSort(Aisle1, option);
-
-    }
+   
     public void Display() 
     {
-        Console.WriteLine("[1] - Exibir por ID \n [2]- Exibir por ano \n [3]- Exibir por autor");
+        Console.WriteLine("[1] - Exibir por ID  ");
+        Console.WriteLine("[2]- Exibir por ano ");
+        Console.WriteLine("[3]- Exibir por autor");
         int input = int.Parse(Console.ReadLine());
         if (input < 1 || input > 3) {
             Console.WriteLine("Input inválido");
@@ -177,7 +229,8 @@ class Biblioteca
         DisplayAisle(Aisle1, 1);
         DisplayAisle(Aisle2, 2);
         DisplayAisle(Aisle3, 3);
-        Console.WriteLine($"Pressione qualquer tecla para continuar");
+        Console.WriteLine("");
+        Console.WriteLine($"Pressione qualquer tecla para continuar...");
         Console.ReadKey();
     
     }
@@ -189,10 +242,12 @@ class Program {
     static void Main()
     {
         Biblioteca biblioteca = new Biblioteca();
-        while (true) {
+        bool NaBibliotequinha = true;
+        while (NaBibliotequinha) {
             Console.Clear();
             Console.WriteLine("=========================");
             Console.WriteLine("[1] - Inserir Livros\n" + "[2] - Procurar Livros\n" + "[3] - Exibir Lista");
+            Console.WriteLine("Pressione qualquer outro número para sair da simulação");
             Console.WriteLine("=========================");
 
             Console.Write("Input: ");
@@ -207,13 +262,17 @@ class Program {
                     biblioteca.insert();
                     break;
                 case 2:
-
+                    Console.Write("Digite o ID do livro: ");
+                    int id = int.Parse(Console.ReadLine());
+                    
+                    biblioteca.SearchBooks(id);
                     break;
                 case 3:
                     biblioteca.Display();
                     break;
-
-
+                default:
+                    NaBibliotequinha = false;
+                    break;
 
             }
         }

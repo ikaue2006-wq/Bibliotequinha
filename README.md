@@ -1,4 +1,7 @@
-# Bibliotequinha
+# Trabalho em Grupo: Biblioteca C#
+# Italo, Alcides, Eduarda, Guilherme e Letícia
+
+
 This project aims to develop programming skills, particularly through the implementation of search and sorting algorithms, using a library management system as its practical foundation.
 
 Dentro do nosso código, implementamos e preferirmos selecionar Bubble Sort como um algoritmo de ordenação e Busca Binária como um algoritmo de busca principal, como o nosso 
